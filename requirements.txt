@@ -2,7 +2,8 @@ streamlit
 langchain
 langchain-core
 langchain-community
-langchain_groq
+langchain-groq
 pandas==1.5.3
 numpy==1.26.4
 python-dotenv
+pyarrow==15.0.2
