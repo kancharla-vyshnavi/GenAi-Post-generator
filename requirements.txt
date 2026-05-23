@@ -1,7 +1,7 @@
 streamlit
 langchain
 langchain-groq
-pandas==1.5.3
+pandas==2.2.2
 numpy==1.26.4
 python-dotenv
 pyarrow
