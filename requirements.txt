@@ -1,7 +1,5 @@
 streamlit
-langchain
-langchain-groq
-pandas==2.2.2
-numpy==1.26.4
+groq
 python-dotenv
-pyarrow
+requests
+pandas
