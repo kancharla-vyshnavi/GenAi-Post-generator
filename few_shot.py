@@ -9,13 +9,19 @@ class FewShotPosts:
         self.load_posts(file_path)
 
     def load_posts(self, file_path):
-        with open(file_path, encoding="utf-8") as f:
-            posts = json.load(f)
-            self.df = pd.json_normalize(posts)
-            self.df['length'] = self.df['line_count'].apply(self.categorize_length)
-            # collect unique tags
-            all_tags = self.df['tags'].apply(lambda x: x).sum()
-            self.unique_tags = list(set(all_tags))
+    with open(file_path, encoding="utf-8", errors="ignore") as f:
+        posts = json.load(f)
+
+    self.df = pd.json_normalize(posts)
+
+    self.df['length'] = self.df['line_count'].apply(
+        self.categorize_length
+    )
+
+    # collect unique tags
+    all_tags = self.df['tags'].apply(lambda x: x).sum()
+
+    self.unique_tags = list(set(all_tags))
 
     def get_filtered_posts(self, length, language, tag):
         df_filtered = self.df[
