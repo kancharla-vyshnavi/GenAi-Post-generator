@@ -9,7 +9,7 @@ class FewShotPosts:
         self.load_posts(file_path)
 
     def load_posts(self, file_path):
-    with open(file_path, encoding="utf-8", errors="ignore") as f:
+        with open(file_path, encoding="utf-8", errors="ignore") as f:
         posts = json.load(f)
 
     self.df = pd.json_normalize(posts)
