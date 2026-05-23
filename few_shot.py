@@ -2,6 +2,16 @@ import pandas as pd
 import json
 
 
+def clean_unicode(obj):
+    if isinstance(obj, str):
+        return obj.encode("utf-8", "ignore").decode("utf-8")
+    elif isinstance(obj, list):
+        return [clean_unicode(item) for item in obj]
+    elif isinstance(obj, dict):
+        return {key: clean_unicode(value) for key, value in obj.items()}
+    return obj
+
+
 class FewShotPosts:
     def __init__(self, file_path="data/processed_posts.json"):
         self.df = None
@@ -12,15 +22,13 @@ class FewShotPosts:
         with open(file_path, encoding="utf-8", errors="ignore") as f:
             posts = json.load(f)
 
+        posts = clean_unicode(posts)
+
         self.df = pd.json_normalize(posts)
 
-        self.df["length"] = self.df["line_count"].apply(
-            self.categorize_length
-        )
+        self.df["length"] = self.df["line_count"].apply(self.categorize_length)
 
-        # collect unique tags
         all_tags = self.df["tags"].apply(lambda x: x).sum()
-
         self.unique_tags = list(set(all_tags))
 
     def get_filtered_posts(self, length, language, tag):
